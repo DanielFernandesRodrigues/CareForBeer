@@ -17,11 +17,18 @@ function getAllBeerTemperatures() {
     const beersTemperature = [];
     for (var i = 0, len = beers.length; i < len; i++) {
         const value = getRandomInt(beers[i].getMinTemperature() - 2, beers[i].getMaxTemperature());
-        console.log('value', value);
         const temperature = new modelTemperature.Temperature(value, dateNow);
         beersTemperature.push(new modelBeerTemperature.BeerTemperature(temperature, beers[i]));
     }
     return beersTemperature;
+}
+
+function getBeerByName(name) {
+    return beers.find(k => k.name === name);
+}
+
+function getAllBeers() {
+    return beers;
 }
 
 function getRandomInt(min, max) {
@@ -31,5 +38,7 @@ function getRandomInt(min, max) {
 }
 
 module.exports = {
-    getAllBeerTemperatures: getAllBeerTemperatures
+    getAllBeerTemperatures: getAllBeerTemperatures,
+    getBeerByName: getBeerByName,
+    getAllBeers: getAllBeers
 };

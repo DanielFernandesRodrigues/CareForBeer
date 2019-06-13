@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/DanielFernandesRodrigues/CareForBeer#readme",
   "dependencies": {
+    "chai": "^4.2.0",
     "cors": "^2.8.5"
   }
 }
