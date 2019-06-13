@@ -46,4 +46,11 @@ Beer.prototype.fill = function(newFields) {
     }
 };
 
+Beer.prototype.isTemperatureOutsideRange = function (temperature) {
+    if (temperature) {
+        return temperature < this.minTemperature || this.maxTemperature < temperature;
+    }
+    return true;
+}
+
 module.exports =  { Beer }

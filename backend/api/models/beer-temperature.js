@@ -3,6 +3,7 @@
 function BeerTemperature(temperature, beer) {
     this.temperature = temperature || null;
     this.beer = beer || null;
+    this.outsideRange = beer && temperature ? beer.isTemperatureOutsideRange(temperature.getCurrentTemperature()) : true;
     return this;
 }
 
@@ -20,6 +21,14 @@ BeerTemperature.prototype.getBeer = function() {
 
 BeerTemperature.prototype.setBeer = function(beer) {
     this.beer = beer;
+}
+
+BeerTemperature.prototype.getOutsideRange = function() {
+    return this.outsideRange;
+}
+
+BeerTemperature.prototype.setOutsideRange = function(beer) {
+    this.outsideRange = outsideRange;
 }
 
 BeerTemperature.prototype.equals = function(otherBeerTemperature) {
