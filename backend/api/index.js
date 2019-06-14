@@ -4,11 +4,12 @@ const home = require('./controller/home');
 const temperatureController = require('./controller/temperature-controller');
 
 function routes (url) {
+    let routesResult = 'hello there';
     switch (url) {
-        case '/home': return home.index();
-        case '/temperature': return JSON.stringify(temperatureController.index());
+        case '/home': routesResult = JSON.stringify(home.index()); break;
+        case '/temperature': routesResult = JSON.stringify(temperatureController.index()); break;
     }
-    return 'hello there';
+    return JSON.stringify(routesResult);
 };
 
 module.exports =  {

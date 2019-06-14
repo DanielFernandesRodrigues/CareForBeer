@@ -2,7 +2,7 @@
   "name": "care-for-beer",
   "version": "1.0.0",
   "description": "Control of beer temperature for don't lose the most precious liquid created by men.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,5 +19,6 @@
   "dependencies": {
     "chai": "^4.2.0",
     "cors": "^2.8.5"
-  }
+  },
+  "proxy": "http://localhost:3000/"
 }
