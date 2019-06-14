@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "react-scripts start"
+    "start": "\"concurrently \"cd.. && cd backend && npm run start\" \"react-scripts start\""
   },
   "author": "Daniel Fernandes Rodrigues",
   "license": "ISC",
   "dependencies": {
     "bootstrap": "^4.3.1",
+    "concurrently": "^4.1.0",
     "cors": "^2.8.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

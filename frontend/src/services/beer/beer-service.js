@@ -7,10 +7,6 @@ export default function BeerService() {
         return apiService.callApi()
         .then(res => {
             return JSON.parse(res);
-        })
-        .catch(err => {
-            console.log('err', err);
-            return [];
         });
     };
 

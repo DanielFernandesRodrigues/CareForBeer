@@ -6,13 +6,20 @@ const beerService = BeerService();
 class Dashboard extends Component {
   beersTemperature;
   apiResult;
+  error = null;
 
   componentDidMount() {
     this.getTemperatures();
   }
 
   getTemperatures = async () => {
-    this.beersTemperature = await beerService.getBeerTemperatures();
+    this.error = null;
+    try {      
+      this.beersTemperature = await beerService.getBeerTemperatures();
+    } catch (error) {
+      this.error = error.message;
+      this.beersTemperature = [];
+    }
     this.setState({ response: this.beersTemperature });
   }
 
@@ -26,6 +33,9 @@ class Dashboard extends Component {
         </div>
         <div>
           <button className="btn btn-info" onClick={this.getTemperatures}>Update Temperatures</button>
+        </div>
+        <div>
+          {this.error}
         </div>
         <div>
           <BeerTemperatureList beersTemperature={this.beersTemperature} />
@@ -42,13 +52,13 @@ function BeerTemperatureList(props) {
   console.log('beersTemperature', beersTemperature);
 
   const listItems = beersTemperature.map((beerTemp, index) =>
-    <div className="col-md-4 p-4" key={index.toString()}>
+    <div className="col-sm-6 col-md-4 p-4" key={index.toString()}>
       <span className={`w-100 ${beerTemp.outsideRange ? 'btn btn-danger' : 'btn btn-success'}`}>
       </span>
       <span className="w-100 btn btn-secondary btn-lg">
         {beerTemp.beer.name} - {beerTemp.temperature.currentTemperature} º
       </span>
-      <span className="w-100 btn btn-secondary">
+      <span className="w-100 btn btn-outline-secondary">
         min:{beerTemp.beer.minTemperature}º - max:{beerTemp.beer.maxTemperature}º
       </span>
     </div>
