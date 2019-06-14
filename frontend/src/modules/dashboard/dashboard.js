@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import BeerService from '../../services/beer/beer-service';
+
+const beerService = BeerService();
 
 class Dashboard extends Component {
   beersTemperature;
@@ -9,27 +12,22 @@ class Dashboard extends Component {
   }
 
   getTemperatures = async () => {
-    this.callApi()
-      .then(res => {
-        this.beersTemperature = JSON.parse(res);
-        this.setState({ response: res });
-      })
-      .catch(err => console.log('err', err));
+    this.beersTemperature = await beerService.getBeerTemperatures();
+    this.setState({ response: this.beersTemperature });
   }
-
-  callApi = async () => {
-    const response = await fetch('/temperature');
-    const body = await response.json();
-    if (response.status !== 200) throw Error(body.message);
-    return body;
-  };
 
   render() {
     return (
-      <div className="App">
-        <button onClick={this.getTemperatures}>GOL</button>
+      <div className="dashboard-container p-1 text-center">
         <div>
-          <h1>Temperatures:</h1>
+          <span className="btn btn-outline-dark btn-lg btn-block mb-3">
+            Beer Temperatures
+          </span>
+        </div>
+        <div>
+          <button className="btn btn-info" onClick={this.getTemperatures}>Update Temperatures</button>
+        </div>
+        <div>
           <BeerTemperatureList beersTemperature={this.beersTemperature} />
         </div>
       </div>
@@ -43,13 +41,20 @@ function BeerTemperatureList(props) {
   if (!beersTemperature.length) return '';  
   console.log('beersTemperature', beersTemperature);
 
-  const listItems = beersTemperature.map((number, index) =>
-    <li key={index.toString()}>
-      {number.beer.name} - {number.temperature.currentTemperature}
-    </li>
+  const listItems = beersTemperature.map((beerTemp, index) =>
+    <div className="col-md-4 p-4" key={index.toString()}>
+      <span className={`w-100 ${beerTemp.outsideRange ? 'btn btn-danger' : 'btn btn-success'}`}>
+      </span>
+      <span className="w-100 btn btn-secondary btn-lg">
+        {beerTemp.beer.name} - {beerTemp.temperature.currentTemperature} º
+      </span>
+      <span className="w-100 btn btn-secondary">
+        min:{beerTemp.beer.minTemperature}º - max:{beerTemp.beer.maxTemperature}º
+      </span>
+    </div>
   );
   return (
-    <ul>{listItems}</ul>
+    <div className="row">{listItems}</div>
   );
 }
 
