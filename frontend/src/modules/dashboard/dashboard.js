@@ -7,8 +7,14 @@ class Dashboard extends Component {
   beersTemperature;
   apiResult;
   error = null;
+  repeatInterval;
 
   componentDidMount() {
+    this.init();
+  }
+
+  init = async () => {
+    this.repeatInterval = setInterval(() => this.setState(this.getTemperatures()), 5000);
     this.getTemperatures();
   }
 
@@ -30,7 +36,7 @@ class Dashboard extends Component {
       });
     } catch (error) {
       this.error = error.message;
-      this.beersTemperature = [];
+      clearInterval(this.repeatInterval);
     }
     this.setState({ response: this.beersTemperature });
   }
@@ -39,14 +45,14 @@ class Dashboard extends Component {
     return (
       <div className="dashboard-container p-1 text-center">
         <div>
-          <span className="btn btn-outline-dark btn-lg btn-block mb-3">
+          <span className="btn btn-dark btn-lg btn-block mb-3">
             Beer Temperatures
           </span>
         </div>
         <div>
-          <button className="btn btn-info" onClick={this.getTemperatures}>Update Temperatures</button>
-        </div>
-        <div>
+          <div>
+            <button className={`btn btn-info${this.error ? '' : ' d-none'}`} onClick={this.init}>Update Temperatures</button>
+          </div>
           {this.error}
         </div>
         <div>
@@ -65,10 +71,9 @@ function BeerTemperatureList(props) {
 
   const listItems = beersTemperature.map((beerTemp, index) =>
     <div className="col-sm-6 col-md-4 p-4" key={index.toString()}>
-      <span className={`w-100 btn btn-${beerTemp.class}`}>
-      </span>
-      <span className="w-100 btn btn-secondary btn-lg">
-        {beerTemp.name} | {beerTemp.currentTemperature} º
+      <span className="w-100 btn btn-dark btn-lg">
+        {beerTemp.name}
+        <span className={`ml-2 badge badge-pill badge-${beerTemp.class}`}>{beerTemp.currentTemperature} º</span>
       </span>
       <span className="w-100 btn btn-outline-secondary">
         min:{beerTemp.min}º - max:{beerTemp.max}º
