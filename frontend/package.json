@@ -4,8 +4,8 @@
   "description": "Display the temperature of the beer to take care of her health",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "\"concurrently \"cd.. && cd backend && npm run start\" \"react-scripts start\""
+    "start": "react-scripts start",
+    "test": "\"concurrently \"cd.. && cd backend && npm run start\" \"react-scripts start\""
   },
   "author": "Daniel Fernandes Rodrigues",
   "license": "ISC",

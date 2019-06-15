@@ -4,7 +4,7 @@
   "description": "Control of beer temperature for don't lose the most precious liquid created by men.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cd test && node beer-temperature-test.js",
     "start": "node app.js"
   },
   "repository": {
