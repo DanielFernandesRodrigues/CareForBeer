@@ -51,7 +51,9 @@ class Dashboard extends Component {
         </div>
         <div>
           <div>
-            <button className={`btn btn-info${this.error ? '' : ' d-none'}`} onClick={this.init}>Update Temperatures</button>
+            <button className={`btn btn-info${this.error ? '' : ' d-none'}`} onClick={this.init}>
+              Restart Beer Temperature Monitor
+            </button>
           </div>
           {this.error}
         </div>
