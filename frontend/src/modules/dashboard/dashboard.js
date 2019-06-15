@@ -15,7 +15,19 @@ class Dashboard extends Component {
   getTemperatures = async () => {
     this.error = null;
     try {      
-      this.beersTemperature = await beerService.getBeerTemperatures();
+      var tempBeersTemperature = await beerService.getBeerTemperatures();
+      this.beersTemperature = tempBeersTemperature.map(k => {
+        return {
+          name: k.beer.name,
+          min: k.beer.minTemperature,
+          max: k.beer.maxTemperature,
+          currentTemperature: k.temperature.currentTemperature,
+          class: k.outsideRange ? 'danger' : 
+            (k.temperature.currentTemperature === k.beer.minTemperature ||
+              k.temperature.currentTemperature === k.beer.maxTemperature ? 
+              'warning' : 'success')
+        };
+      });
     } catch (error) {
       this.error = error.message;
       this.beersTemperature = [];
@@ -53,13 +65,13 @@ function BeerTemperatureList(props) {
 
   const listItems = beersTemperature.map((beerTemp, index) =>
     <div className="col-sm-6 col-md-4 p-4" key={index.toString()}>
-      <span className={`w-100 ${beerTemp.outsideRange ? 'btn btn-danger' : 'btn btn-success'}`}>
+      <span className={`w-100 btn btn-${beerTemp.class}`}>
       </span>
       <span className="w-100 btn btn-secondary btn-lg">
-        {beerTemp.beer.name} - {beerTemp.temperature.currentTemperature} º
+        {beerTemp.name} | {beerTemp.currentTemperature} º
       </span>
       <span className="w-100 btn btn-outline-secondary">
-        min:{beerTemp.beer.minTemperature}º - max:{beerTemp.beer.maxTemperature}º
+        min:{beerTemp.min}º - max:{beerTemp.max}º
       </span>
     </div>
   );

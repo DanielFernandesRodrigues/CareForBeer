@@ -16,7 +16,7 @@ function getAllBeerTemperatures() {
     const dateNow = new Date();
     const beersTemperature = [];
     for (var i = 0, len = beers.length; i < len; i++) {
-        const value = getRandomInt(beers[i].getMinTemperature() - 2, beers[i].getMaxTemperature());
+        const value = getRandomInt(beers[i].getMinTemperature() - 2, beers[i].getMaxTemperature() + 2);
         const temperature = new modelTemperature.Temperature(value, dateNow);
         beersTemperature.push(new modelBeerTemperature.BeerTemperature(temperature, beers[i]));
     }
